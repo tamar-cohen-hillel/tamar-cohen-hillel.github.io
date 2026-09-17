@@ -1,0 +1,9 @@
+{
+  "name": "comm204-process-flow-game",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node scripts/static-server.mjs",
+    "test": "node --test"
+  }
+}

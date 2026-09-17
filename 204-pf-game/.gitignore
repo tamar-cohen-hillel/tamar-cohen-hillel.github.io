@@ -1,0 +1,3 @@
+# Temporary LaTeX build files
+/student-case/*.aux
+/student-case/*.log

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="COMM 204 hospital process-flow instructor timer">
+  <title>Instructor Display · COMM 204 Process Flow</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="instructor-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="app-header instructor-header">
+    <a class="wordmark" href="./index.html" aria-label="COMM 204 Process Flow home">
+      <span class="wordmark__badge">204</span>
+      <span>Instructor Display</span>
+    </a>
+    <div id="connection-status" class="connection-status" role="status">
+      <span class="connection-status__dot" aria-hidden="true"></span>
+      <span>Checking connection</span>
+    </div>
+  </header>
+
+  <main id="main-content" class="instructor-shell">
+    <section id="instructor-setup" class="instructor-setup" aria-labelledby="setup-heading">
+      <div>
+        <p class="eyebrow">Instructor setup</p>
+        <h1 id="setup-heading">Prepare the classroom clock</h1>
+        <p class="setup-copy">Use the exact game code announced to teams. Every official run, section, and test should use a unique code.</p>
+      </div>
+      <form id="instructor-entry-form" class="entry-card">
+        <label for="instructor-game-code">Game code</label>
+        <input id="instructor-game-code" type="text" autocomplete="off" autocapitalize="characters" required>
+
+        <label for="planned-rounds">Number of periods</label>
+        <input id="planned-rounds" type="number" min="1" step="1" inputmode="numeric" required>
+
+        <button class="button button--primary button--wide" type="submit">Continue</button>
+        <div id="instructor-entry-error" class="validation-message" role="alert" hidden></div>
+      </form>
+    </section>
+
+    <section id="instructor-display" class="instructor-display" hidden aria-labelledby="timer-heading">
+      <div class="projection-meta">
+        <div>
+          <span class="projection-label">Game code</span>
+          <strong id="instructor-game-identity" class="projection-code"></strong>
+        </div>
+        <div class="round-display">
+          <span class="projection-label">Current period</span>
+          <strong><span id="current-round">1</span> / <span id="planned-round-count">1</span></strong>
+        </div>
+      </div>
+
+      <section class="clock-panel" aria-labelledby="timer-heading">
+        <p id="timer-state-label" class="clock-state">Ready</p>
+        <h1 id="timer-heading" class="clock" aria-live="off">10:00</h1>
+        <p id="cutoff-status" class="cutoff-status">No cutoff recorded yet.</p>
+      </section>
+
+      <section class="instructor-controls" aria-label="Timer controls">
+        <div class="control-group control-group--primary">
+          <button id="start-timer" class="button button--primary" type="button">Start</button>
+          <button id="pause-resume" class="button button--primary" type="button" disabled>Pause</button>
+          <button id="add-time" class="button" type="button" disabled>Add 30 Seconds</button>
+          <button id="remove-time" class="button" type="button" disabled>Remove 30 Seconds</button>
+        </div>
+
+        <div class="control-group">
+          <button id="add-period" class="button" type="button">Add Period</button>
+          <button id="remove-period" class="button" type="button">Remove Period</button>
+          <button id="reset-timer" class="button" type="button" disabled>Reset Current Timer</button>
+        </div>
+
+        <div class="control-group control-group--danger">
+          <button id="end-simulation" class="button button--danger" type="button">End Simulation</button>
+          <button id="start-new-simulation" class="button button--quiet" type="button">Start New Simulation</button>
+        </div>
+      </section>
+
+      <div id="instructor-record-status" class="status-banner" role="status" hidden></div>
+      <div id="instructor-upload-actions" class="control-group" hidden>
+        <button id="retry-instructor-upload" class="button" type="button">Retry Record Submission</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="instructor-dialog" class="dialog">
+    <form method="dialog">
+      <p id="instructor-dialog-kicker" class="eyebrow">Please confirm</p>
+      <h2 id="instructor-dialog-title"></h2>
+      <div id="instructor-dialog-message" class="dialog__message"></div>
+      <div class="dialog__actions">
+        <button class="button button--quiet" value="cancel">Cancel</button>
+        <button id="instructor-dialog-confirm" class="button button--primary" value="confirm">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="./src/instructor/instructor-app.js"></script>
+</body>
+</html>

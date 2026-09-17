@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="COMM 204 hospital process-flow team console">
+  <title>Team Console · COMM 204 Process Flow</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="app-header">
+    <a class="wordmark" href="./index.html" aria-label="COMM 204 Process Flow home">
+      <span class="wordmark__badge">204</span>
+      <span>Hospital Process Flow</span>
+    </a>
+    <div id="connection-status" class="connection-status" role="status">
+      <span class="connection-status__dot" aria-hidden="true"></span>
+      <span>Checking connection</span>
+    </div>
+  </header>
+
+  <main id="main-content" class="app-shell">
+    <section id="entry-view" class="entry-view" aria-labelledby="entry-heading">
+      <div class="entry-copy">
+        <p class="eyebrow">Team console</p>
+        <h1 id="entry-heading">Join your game</h1>
+        <p>Use the game code announced by your instructor and the team code printed on your team materials.</p>
+      </div>
+
+      <form id="entry-form" class="entry-card">
+        <label for="game-code">Game code</label>
+        <input id="game-code" name="gameCode" type="text" autocomplete="off" autocapitalize="characters" required>
+        <p class="field-hint">Example: 2026W1-101</p>
+
+        <label for="team-code">Team code</label>
+        <input id="team-code" name="teamCode" type="text" autocomplete="off" autocapitalize="characters" required>
+
+        <button class="button button--primary button--wide" type="submit">Continue</button>
+        <div id="entry-error" class="validation-message" role="alert" hidden></div>
+      </form>
+
+      <aside class="recovery-notice" aria-labelledby="recovery-heading">
+        <h2 id="recovery-heading">Before you begin</h2>
+        <ul id="recovery-warnings"></ul>
+      </aside>
+    </section>
+
+    <section id="game-view" class="game-view" hidden aria-labelledby="game-heading">
+      <div class="game-title-row">
+        <div>
+          <p id="game-identity" class="eyebrow"></p>
+          <h1 id="game-heading">Prepare Period <span id="next-period-number">1</span></h1>
+        </div>
+        <button id="end-game-button" class="button button--quiet" type="button">End Game</button>
+      </div>
+
+      <div id="offline-banner" class="status-banner status-banner--danger" role="alert" hidden>
+        You appear to be offline. This period has not been run. Reconnect before submitting.
+      </div>
+
+      <section class="dashboard-section" aria-labelledby="system-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">Current system</p>
+            <h2 id="system-heading">Queues and flow</h2>
+          </div>
+          <div class="wip-badge">
+            <span>Patients in system</span>
+            <strong id="wip-total">0</strong>
+          </div>
+        </div>
+
+        <div id="queue-grid" class="queue-grid"></div>
+
+        <div class="metric-strip">
+          <div class="metric-strip__item">
+            <span>Scheduled completed</span>
+            <strong id="scheduled-completed">0</strong>
+          </div>
+          <div class="metric-strip__item">
+            <span>Unscheduled completed</span>
+            <strong id="unscheduled-completed">0</strong>
+          </div>
+          <div class="metric-strip__item">
+            <span>Periods completed</span>
+            <strong id="periods-completed">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-section stakeholder-dashboard" aria-labelledby="stakeholder-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">Hospital leadership dashboard</p>
+            <h2 id="stakeholder-heading">Are we meeting our goals?</h2>
+          </div>
+          <p class="muted-copy">Cumulative results through the latest completed period</p>
+        </div>
+        <div id="stakeholder-grid" class="stakeholder-grid"></div>
+      </section>
+
+      <section class="allocation-section" aria-labelledby="allocation-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">Your decision</p>
+            <h2 id="allocation-heading">Allocate all six workers</h2>
+          </div>
+          <p class="allocation-rule">Every activity needs at least one qualified worker.</p>
+        </div>
+
+        <form id="allocation-form">
+          <div id="worker-grid" class="worker-grid"></div>
+          <div id="allocation-errors" class="validation-message" role="alert" hidden></div>
+
+          <div class="allocation-footer">
+            <div>
+              <h3>Allocation summary</h3>
+              <div id="allocation-summary" class="allocation-summary"></div>
+            </div>
+            <button id="submit-period-button" class="button button--primary button--submit" type="submit">
+              Submit and run Period <span id="submit-period-number">1</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section class="dashboard-section" aria-labelledby="utilization-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">Previous period</p>
+            <h2 id="utilization-heading">Worker utilization</h2>
+          </div>
+          <p id="utilization-empty" class="muted-copy">Submit the first allocation to see utilization.</p>
+        </div>
+        <div id="utilization-grid" class="utilization-grid"></div>
+      </section>
+
+      <div id="save-status" class="status-banner" role="status" hidden></div>
+      <div id="upload-actions" class="upload-actions" hidden>
+        <button id="retry-upload-button" class="button button--quiet" type="button" hidden>Retry Upload</button>
+      </div>
+    </section>
+
+    <section id="final-view" class="final-view" hidden aria-labelledby="final-heading">
+      <p id="final-identity" class="eyebrow"></p>
+      <h1 id="final-heading">Game complete</h1>
+      <p class="final-intro">These statistics cover the periods completed on this laptop.</p>
+
+      <section class="dashboard-section stakeholder-dashboard" aria-labelledby="final-stakeholder-heading">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-kicker">Hospital leadership dashboard</p>
+            <h2 id="final-stakeholder-heading">Did we meet our goals?</h2>
+          </div>
+          <p class="muted-copy">Final cumulative results. Patient Access and Urgent Care use completed patients only.</p>
+        </div>
+        <div id="final-stakeholder-grid" class="stakeholder-grid"></div>
+      </section>
+
+      <div id="verification-status" class="verification-panel" role="note">
+        <div>
+          <strong>Keep your encrypted game-verification file.</strong>
+          <p>Your browser may save it directly to Downloads instead of asking where to save it. Send the opaque <code>.gamebackup</code> file to your instructor only if requested.</p>
+        </div>
+        <button id="download-backup-again" class="button button--quiet" type="button">Download verification file again</button>
+      </div>
+
+      <section class="final-section" aria-labelledby="patient-results-heading">
+        <h2 id="patient-results-heading">Patient results</h2>
+        <p class="muted-copy">Visit duration includes waiting and service for completed patients only. The waiting statistics below include every patient who arrived, including patients still waiting or receiving care, and count only waiting accumulated up to End Game.</p>
+        <div id="patient-summary-grid" class="patient-summary-grid"></div>
+      </section>
+
+      <section class="final-section" aria-labelledby="ending-wip-heading">
+        <h2 id="ending-wip-heading">Ending work-in-process</h2>
+        <div id="ending-wip-grid" class="ending-wip-grid"></div>
+      </section>
+
+      <section class="final-section" aria-labelledby="average-utilization-heading">
+        <h2 id="average-utilization-heading">Average utilization</h2>
+        <div class="final-utilization-layout">
+          <div>
+            <h3>By worker</h3>
+            <div id="final-worker-utilization" class="compact-metrics"></div>
+          </div>
+          <div>
+            <h3>By activity</h3>
+            <div id="final-activity-utilization" class="compact-metrics"></div>
+          </div>
+        </div>
+      </section>
+
+      <div id="team-end-status" class="status-banner" role="status" hidden></div>
+      <div id="team-end-upload-actions" class="upload-actions" hidden>
+        <button id="retry-team-end-upload" class="button button--quiet" type="button">Retry Team-End Submission</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="confirmation-dialog" class="dialog">
+    <form method="dialog">
+      <p id="dialog-kicker" class="eyebrow">Please confirm</p>
+      <h2 id="dialog-title"></h2>
+      <div id="dialog-message" class="dialog__message"></div>
+      <div class="dialog__actions">
+        <button id="dialog-cancel" class="button button--quiet" value="cancel">Cancel</button>
+        <button id="dialog-confirm" class="button button--primary" value="confirm">Confirm</button>
+      </div>
+    </form>
+  </dialog>
+
+  <noscript>
+    <div class="noscript-message">This simulation requires JavaScript. Please enable it and reload.</div>
+  </noscript>
+
+  <script type="module" src="./src/student/team-app.js"></script>
+</body>
+</html>
